@@ -1,4 +1,4 @@
-# android-intrumentation-test-runner
+# android-instrumentation-test-runner
 
 GitHub Action to run Android Instrumentation tests.
 
