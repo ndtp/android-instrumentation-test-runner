@@ -4,26 +4,6 @@ author: 'ndtp'
 
 inputs:
 
-  # api-level:
-  #   description: API level of the platform and system image - e.g. 23 for Android Marshmallow, 29 for Android 10
-  #   default: 29
-  #   required: true
-
-  # target:
-  #   description: Target of the system image - default, google_apis, google_apis_playstore, aosp_atd, google_atd, android-wear, android-wear-cn, android-tv or google-tv
-  #   default: google_apis
-  #   required: true
-
-  # arch:
-  #   description: CPU architecture of the system image - x86, x86_64 or arm64-v8a
-  #   default: x86_64
-  #   required: true
-
-  # profile:
-  #   description: hardware profile used for creating the AVD - e.g. `Nexus 6`
-  #   default: pixel_3a
-  #   required: true
-
   app_apk:
     description: The full path to the application apk under test. For library projects, this will be the test apk.
     required: true
@@ -46,17 +26,14 @@ inputs:
 
   shard_count:
     description: "The total number of test execution shards to use."
+    type: number
     default: 0
     required: false
 
   shard_index:
     description: "Current shard index to run for testing."
+    type: number
     default: 0
-    required: false
-
-  verbose:
-    description: You can enable the verbose log for easier debugging.
-    default: false
     required: false
 
   annotation:
@@ -65,6 +42,12 @@ inputs:
 
   not_annotation:
     description: Fully qualified name of the annotation to not run.
+    required: false
+
+  verbose:
+    description: You can enable the verbose log for easier debugging.
+    type: boolean
+    default: false
     required: false
 
 runs:
@@ -76,20 +59,10 @@ runs:
         distribution: "temurin"
         java-version: 21
 
-    # - name: Setup Gradle
-    #   uses: gradle/actions/setup-gradle@v4
-
-    # - name: Enable KVM
-    #   shell: bash
-    #   run: |
-    #     echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-    #     sudo udevadm control --reload-rules
-    #     sudo udevadm trigger --name-match=kvm
-
     - name: Run tests
       shell: bash
       run: |
-        "${{ github.action_path }}/action.sh" {{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.verbose }} ${{ inputs.annotation }} ${{ inputs.not_annotation }}
+        "${{ github.action_path }}/action.sh" {{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.verbose }}
 
     - name: Upload test results
       uses: actions/upload-artifact@v4

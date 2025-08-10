@@ -86,11 +86,15 @@ invoke_adb_command()
         shard="-e numShards $shard_count -e shardIndex $shard_index"
     fi
 
-    if [ ! -z "annotation" ]; then
+    if [ ! -z "$annotation" ]; then
         annotation_arg="-e annotation $annotation"
     fi
 
-    local adb_command="adb shell am instrument -r -w $shard $annotation_arg $test_package/$test_runner"
+      if [ ! -z "$not_annotation" ]; then
+          not_annotation_arg="-e notAnnotation $not_annotation"
+      fi
+
+    local adb_command="adb shell am instrument -r -w $shard $annotation_arg $not_annotation_arg $test_package/$test_runner"
 
     info "Running '$adb_command'..."
     adb logcat -c
@@ -180,9 +184,9 @@ load_input_arguments()
     export test_runner="${5:-${TEST_RUNNER}}"
     export shard_count="${6:-${SHARD_COUNT}}"
     export shard_index="${7:-${SHARD_INDEX}}"
-    export verbose="${8:-${VERBOSE}}"
-    export annotation="${9:-${ANNOTATION}}"
-    export not_annotation="${10:-${NOT_ANNOTATION}}"
+    export annotation="${8:-${ANNOTATION}}"
+    export not_annotation="${9:-${NOT_ANNOTATION}}"
+    export verbose="${10:-${VERBOSE}}"
 }
 
 verify_input_arguments()
@@ -195,9 +199,9 @@ verify_input_arguments()
     verbose "test_runner=$test_runner"
     verbose "shard_count=$shard_count"
     verbose "shard_index=$shard_index"
-    verbose "verbose=$verbose"
     verbose "annotation=$annotation"
     verbose "not_annotation=$not_annotation"
+    verbose "verbose=$verbose"
 }
 
 main()
