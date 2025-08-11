@@ -75,7 +75,7 @@ runs:
           ./reports/*.xml
 
     - name: Test Report
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2.1.1
       if: success() || failure()
       with:
         name: Instrumentation Tests ${{ inputs.shard_index }}
