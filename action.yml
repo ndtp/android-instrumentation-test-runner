@@ -62,7 +62,7 @@ runs:
     - name: Run tests
       shell: bash
       run: |
-        "${{ github.action_path }}/action.sh" {{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.verbose }}
+        "${{ github.action_path }}/action.sh" ${{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.verbose }}
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
