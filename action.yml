@@ -44,6 +44,10 @@ inputs:
     description: Fully qualified name of the annotation to not run.
     required: false
 
+  filter_package:
+    description: Fully qualified package name of the tests to run. For example, dev.testify.samples.flix.ui.common
+    required: false
+
   artifact_name:
     description: Name of the uploaded artifact. Falls back to android-test-results-<shard_index> when empty.
     required: false
@@ -72,7 +76,7 @@ runs:
     - name: Run tests
       shell: bash
       run: |
-        "${{ github.action_path }}/action.sh" ${{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.verbose }}
+        "${{ github.action_path }}/action.sh" ${{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.filter_package }} ${{ inputs.verbose }}
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
