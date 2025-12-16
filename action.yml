@@ -75,8 +75,20 @@ runs:
 
     - name: Run tests
       shell: bash
+      env:
+        APP_APK: ${{ inputs.app_apk }}
+        APP_PACKAGE: ${{ inputs.app_package }}
+        TEST_APK: ${{ inputs.test_apk }}
+        TEST_PACKAGE: ${{ inputs.test_package }}
+        TEST_RUNNER: ${{ inputs.test_runner }}
+        SHARD_COUNT: ${{ inputs.shard_count }}
+        SHARD_INDEX: ${{ inputs.shard_index }}
+        ANNOTATION: ${{ inputs.annotation }}
+        NOT_ANNOTATION: ${{ inputs.not_annotation }}
+        PACKAGE: ${{ inputs.filter_package }}
+        VERBOSE: ${{ inputs.verbose }}
       run: |
-        "${{ github.action_path }}/action.sh" ${{ inputs.app_apk }} ${{ inputs.app_package }} ${{ inputs.test_apk }} ${{ inputs.test_package }} ${{ inputs.test_runner }} ${{ inputs.shard_count }} ${{ inputs.shard_index }} ${{ inputs.annotation }} ${{ inputs.not_annotation }} ${{ inputs.filter_package }} ${{ inputs.verbose }}
+        "${{ github.action_path }}/action.sh"
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
